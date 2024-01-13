@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="time.js"></script>
+    <link rel="stylesheet" href="./style.css">
+    <title>Mesai</title>
+</head>
+<body>
+
+    <div class="timer_box">
+        <h1 id="mesaiHeader">Mesain kacta bitiyor?</h1>
+
+        <form action="index.html">
+            <button id="clasicButton">Klasik (18:00)</button>
+        </form>
+        
+        <form>
+            <br>
+            <input type="time" id="saathesapla">
+            <br>    
+            <button id="hesaplaButton">Hesapla</button>
+            <p id="kalanSaat"></p>
+        </form>
+        
+        
+    </div>
+
+   
+
+    <script>
+
+        var hesaplaButton=document.querySelector("#hesaplaButton");
+        var timer = document.querySelector("#saathesapla");
+        var mesaiHeader = document.querySelector("#mesaiHeader");
+        var kalanSaat = document.querySelector("#kalanSaat");
+        var clasicButton = document.querySelector("#clasicButton");
+        var mesaiBitimi = "";
+
+        const getCurrentTime = () => {
+            setInterval(() => {
+                const dt = new Date();
+                var hours = dt.getHours().toString().padStart(2 , '0');
+                var minutes = dt.getMinutes().toString().padStart(2, '0');
+                var seconds = dt.getSeconds().toString().padStart(2, '0');
+                
+        
+                var myArray = mesaiBitimi.split(":");
+                console.log(myArray);
+
+                var rseconds = 60 - seconds;
+                var rminutes = 0;
+                var rhours = 0;
+                if(myArray[1]>minutes){
+                    rminutes = (myArray[1] - minutes) - 1;
+                    rhours = myArray[0] - hours;
+
+                }else {
+                    rminutes = ((59 - minutes) + Number(myArray[1]));
+                    rhours = (myArray[0] - hours) -1;
+                } 
+                var sonuc = rhours + ":" + rminutes + ":" + rseconds;
+                kalanSaat.innerHTML = sonuc;
+                
+            }, 1000);
+        };
+
+        const getCurrentTime18 = () => {
+            setInterval(() => {
+                const dt = new Date();
+                var hours = dt.getHours().toString().padStart(2 , '0');
+                var minutes = dt.getMinutes().toString().padStart(2, '0');
+                var seconds = dt.getSeconds().toString().padStart(2, '0');
+                
+
+                var rseconds = 60 - seconds;
+                var rminutes = 60 - minutes -1;
+                var rhours = 18 - hours - 1;
+                
+                var sonuc = rhours + ":" + rminutes + ":" + rseconds;
+                kalanSaat.innerHTML = sonuc;
+                
+            }, 1000);
+        };
+        
+        clasicButton.onclick=function(){
+            mesaiHeader.innerHTML = "Mesainin bitmesine son..."
+            timer.remove();
+            hesaplaButton.remove();
+            clasicButton.remove();
+            getCurrentTime18();
+        }
+        
+
+        hesaplaButton.onclick=function(){
+            mesaiHeader.innerHTML = "Mesainin bitmesine son..."
+            mesaiBitimi = timer.value;
+            timer.remove();
+            hesaplaButton.remove();
+            clasicButton.remove();
+            getCurrentTime();
+        }
+
+    </script>
+    
+    
+</body>
+</html>
